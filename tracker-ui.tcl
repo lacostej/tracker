@@ -10,6 +10,7 @@ proc every {ms body} {
 set user $env(USER)
 
 pack [label .tracker -textvariable time -font "Times 36" -relief sunken]
+pack [ttk::progressbar .bar]
 
 every 1000 {
 	global user red_threshold
@@ -38,4 +39,5 @@ every 1000 {
 	} {
 		.tracker configure -foreground black -background white
 	}
+	.bar configure -max $total -value $left
 }
