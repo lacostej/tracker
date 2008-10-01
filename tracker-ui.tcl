@@ -18,8 +18,22 @@ every 1000 {
 	gets $f l2
 	gets $f l3
 	close $f
+
+	# Time left in seconds
+	set total [lindex $l1 0]
+	set used [lindex $l1 1]
+	set left 0
+	catch { set left [expr $total - $used] }
+
+	# Informational last line #3?
+	switch "$l3" {
+		"" {
+			set l3 "Not tracking"
+		}
+	}
 	set ::time "$l3"
-	if {[expr [lindex $l1 0] - [lindex $l1 1]] < $red_threshold} {
+
+	if {$left < $red_threshold} {
 		.tracker configure -foreground white -background red
 	} {
 		.tracker configure -foreground black -background white
