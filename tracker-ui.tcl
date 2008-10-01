@@ -8,6 +8,7 @@ proc every {ms body} {
 set user $env(USER)
 
 pack [label .tracker -textvariable time]
+pack [ttk::progressbar .bar]
 
 every 1000 {
 	global user
@@ -17,4 +18,9 @@ every 1000 {
 	gets $f l3
 	close $f
 	set ::time "$l3"
+	set times [split "$l1" " "]
+	set max [lindex $times 0]
+	set cur [lindex $times 1]
+	set left [expr $max - $cur]
+	.bar configure -max $max -value $left
 }
