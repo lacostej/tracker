@@ -6,10 +6,15 @@ import gobject
 
 def cb_function(l, b):
   lines = open('/var/log/tracker/%s' % os.getenv('USER')).readlines()
-  words = lines[0].split()
-  maxtime = words[0]
-  usedtime = words[1]
-  prettytime = lines[2].strip()
+  try:
+    words = lines[0].split()
+    maxtime = words[0]
+    usedtime = words[1]
+    prettytime = lines[2].strip()
+  except IndexError:
+    b.set_fraction(0.0)
+    l.set_text('Unknown time left')
+    return 1
   frac = float(usedtime)/float(maxtime)
   if (frac < 0.1):
     l.set_markup('<span color="#FF0000">%s</span>' % prettytime)
