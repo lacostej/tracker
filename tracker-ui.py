@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import time
 import sys
 import os
@@ -5,7 +6,7 @@ import gtk
 import gobject
 
 def cb_function(l, b):
-  lines = open('./%s' % os.getenv('USER')).readlines()
+  lines = open('/var/log/tracker/%s' % os.getenv('USER')).readlines()
   words = lines[0].split()
   maxtime = words[0]
   usedtime = words[1]
