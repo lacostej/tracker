@@ -1,5 +1,4 @@
 #!/usr/bin/python
-import time
 import sys
 import os
 import gtk
@@ -20,7 +19,7 @@ def cb_function(l, b):
   return 1
 
 win = gtk.Window()
-win.set_name("Time Left")
+win.set_title("Time Left")
 win.set_border_width(5)
 win.connect("destroy", gtk.main_quit)
 
@@ -29,10 +28,9 @@ vbox.set_spacing(5)
 win.add(vbox)
 
 bar = gtk.ProgressBar()
-bar.set_fraction(0.0)
 vbox.add(bar)
 
-label = gtk.Label(str="test")
+label = gtk.Label()
 vbox.add(label)
 
 gobject.timeout_add(1000, cb_function, label, bar)
