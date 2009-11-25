@@ -1,12 +1,32 @@
-Tracker is a simple program used to track and control how much time your users spend online.
+DESCRIPTION
 
+Track internet use time by user, allowing a sysadmin to specify maximum
+time limits (per user) in /var/log/tracker/%s (where %s is the login name).
 
-HOW IT WORKS
+The file needs to be written with just one number: the number of seconds
+per day that the user is allowed for a connection.  The tracker will
+update the file to contain how many seconds are left, and when the last
+time the user was logged on was, along with full name and time left
+information, so it turns the file into something like this:
 
-tracker is a daemon that looks into /proc/net/tcp, checks for networking activity for each user and adjusts time left from a quota persisted in a per user log file found under /var/log/tracker/
-Default quota is 1 hour.
-Simple GUIs allows the user to display his/her remaining time left.
-Administrator can increase/decrease the remaining time by modifying the time left in the user specific log file.
+    [torvalds@nehalem ~]$ cat /var/log/tracker/torvalds
+    2600 441 1222822497
+    Linus Torvalds
+    0:35:59 left
+
+which means that user 'torvalds' is allowed 2600 seconds of internet per
+day (that's the only part that the admin needs to fill in, and can be
+updated by just writing a new number to the file), has used 441 seconds
+today, and was last seen logged in at 1222822497 (seconds since epoch).
+
+The full name and time left is purely for visualizers, ie some trivial
+applications that read this file could/should just ignore the real data,
+and pick up that "time left" part.
+
+The "per day" is approximate - tracker will clear the 'used time'
+whenever more than eight hours have passed since last login.
+
+There's a tcl/tk and python visualizers that the user can run to display time left for his account.
 
 
 INSTALL
@@ -21,11 +41,6 @@ add to system startup. E.g. add tracker to your /etc/rc.local script
 for each user you want to monitor, do
 
   touch /var/log/tracker/$kidloginname
-
-
-RUNNING
-
-edit the /var/log/tracker/$kidloginname file if you want to add some time.
 
 
 LINKS
