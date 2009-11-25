@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <errno.h>
 #include <pwd.h>
 #include <sys/wait.h>
 
@@ -94,7 +95,9 @@ static void update_times(struct user *user, struct timeval *now)
 		user->last = now->tv_sec;
 		update_fd(user, fd, s);
 		close(fd);
-	}
+	} else {
+		fprintf(stderr, "Couldn't write to %s. Errno: %d: \"%s\"\n", filename, errno, strerror(errno));
+        }
 }
 
 static void report(struct user *user, int login)
