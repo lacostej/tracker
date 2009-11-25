@@ -1,0 +1,32 @@
+Tracker is a simple program used to track and control how much time your users spend online.
+
+
+HOW IT WORKS
+
+tracker is a daemon that looks into /proc/net/tcp, checks for networking activity for each user and adjusts time left from a quota persisted in a per user log file found under /var/log/tracker/
+Default quota is 1 hour.
+Simple GUIs allows the user to display his/her remaining time left.
+Administrator can increase/decrease the remaining time by modifying the time left in the user specific log file.
+
+
+INSTALL
+
+  make
+  cp tracker /usr/local/bin/
+
+add to system startup. E.g. add tracker to your /etc/rc.local script
+
+  mkdir /var/log/tracker/
+
+for each user you want to monitor, do
+
+  touch /var/log/tracker/$kidloginname
+
+
+RUNNING
+
+edit the /var/log/tracker/$kidloginname file if you want to add some time.
+
+
+LINKS
+http://torvalds-family.blogspot.com/2008/10/tracking-time-kids-spend-online.html
